@@ -1,0 +1,183 @@
+@import 'tailwindcss';
+
+/* ------------------------------------------------------------------
+   Design tokens — lifted verbatim from `design/Nexoffice Website.dc.html`
+   ------------------------------------------------------------------ */
+@theme {
+  --font-sans: var(--font-plus-jakarta), ui-sans-serif, system-ui, sans-serif;
+
+  /**
+   * The header's five links plus the CTA stop fitting on one row just under
+   * 900px, which is where the nav collapses into the mobile menu.
+   */
+  --breakpoint-menu: 900px;
+
+  /* Surfaces */
+  --color-ink: #05050c;
+  --color-ink-header: rgba(6, 6, 16, 0.72);
+  --color-ink-footer: rgba(4, 4, 10, 0.7);
+  --color-ink-field: rgba(8, 8, 20, 0.6);
+
+  /* Brand ramp (prefixed so it never collides with Tailwind's own palette) */
+  --color-nex-violet: #a855f7;
+  --color-nex-purple: #7c3aed;
+  --color-nex-indigo: #4f46e5;
+  --color-nex-blue: #2563eb;
+  --color-nex-sky: #3b82f6;
+  --color-nex-cyan: #22d3ee;
+  --color-nex-cyan-soft: #67e8f9;
+  --color-nex-emerald: #10b981;
+
+  /* Icon / accent tints */
+  --color-nex-violet-ink: #c4a6ff;
+  --color-nex-violet-soft: #d6bbff;
+  --color-nex-sky-ink: #93c5fd;
+  --color-nex-sky-soft: #a9cbff;
+  --color-nex-cyan-ink: #8fe9f5;
+  --color-nex-periwinkle: #7c6bf5;
+
+  /* Typography scale */
+  --color-fg: #e8e9f3;
+  --color-fg-lead: #a3a7bd;
+  --color-fg-body: #a8abc2;
+  --color-fg-muted: #9ea2b9;
+  --color-fg-quote: #ccd0e2;
+  --color-fg-nav: #b6b9cd;
+  --color-fg-meta: #9296ad;
+  --color-fg-footer: #8e92a8;
+  --color-fg-faint: #74788e;
+  --color-fg-label: #6e7288;
+  --color-fg-social: #cfd2e2;
+  --color-fg-badge: #d8c9ff;
+  --color-fg-map: #d5f6fb;
+  --color-danger: #fca5a5;
+  --color-success: #8de9c4;
+
+  /* The design's hover transitions all use the CSS keyword `ease`. */
+  --ease-native: ease;
+
+  /**
+   * The design sets line-height only where it means to; everything else runs at
+   * the font's `normal`. Tailwind's size utilities ship an opinionated pairing,
+   * so the pairings are cleared here and leading is opted into explicitly.
+   */
+  --text-xs--line-height: normal;
+  --text-sm--line-height: normal;
+  --text-base--line-height: normal;
+  --text-lg--line-height: normal;
+  --text-xl--line-height: normal;
+  --text-2xl--line-height: normal;
+  --text-3xl--line-height: normal;
+  --text-4xl--line-height: normal;
+  --text-5xl--line-height: normal;
+
+  /* Ambient background motion */
+  --animate-drift: nexDrift 22s ease-in-out infinite;
+  --animate-drift-2: nexDrift2 26s ease-in-out infinite;
+  --animate-pulse-dot: nexPulse 2.4s ease-in-out infinite;
+  --animate-pulse-pin: nexPulse 2.6s ease-in-out infinite;
+
+  @keyframes nexDrift {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d(4%, -6%, 0) scale(1.12);
+    }
+    100% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+
+  @keyframes nexDrift2 {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1.05);
+    }
+    50% {
+      transform: translate3d(-6%, 5%, 0) scale(0.95);
+    }
+    100% {
+      transform: translate3d(0, 0, 0) scale(1.05);
+    }
+  }
+
+  @keyframes nexPulse {
+    0%,
+    100% {
+      opacity: 0.55;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Keep anchored sections clear of the sticky header. */
+    scroll-padding-top: 88px;
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-ink);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    /* Preflight sets 1.5 on <html>; the design runs on the font's own metrics
+       and opts into leading per element. */
+    line-height: normal;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: rgb(124 58 237 / 0.45);
+  }
+
+  a {
+    color: var(--color-nex-cyan);
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: var(--color-nex-cyan-soft);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-nex-cyan);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Gradient wordmark used by the hero headline. */
+@utility text-brand-gradient {
+  background: linear-gradient(100deg, #a855f7, #3b82f6 55%, #22d3ee);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}

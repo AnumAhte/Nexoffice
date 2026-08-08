@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 168 168" width="168" height="168">
+  <defs>
+    <linearGradient id="nexIcon" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#A855F7"/>
+      <stop offset="22%" stop-color="#7C3AED"/>
+      <stop offset="58%" stop-color="#2563EB"/>
+      <stop offset="100%" stop-color="#22D3EE"/>
+    </linearGradient>
+  </defs>
+  <rect width="168" height="168" rx="38" fill="#05050c"/>
+  <g transform="translate(12 18)">
+    <rect x="0" y="40" width="24" height="24" rx="7" fill="#7C3AED"/>
+    <rect x="32" y="40" width="24" height="24" rx="7" fill="#10B981"/>
+    <rect x="0" y="72" width="24" height="24" rx="7" fill="#4F46E5"/>
+    <rect x="32" y="72" width="24" height="24" rx="7" fill="#2563EB"/>
+    <rect x="66" y="40" width="28" height="92" rx="10" fill="url(#nexIcon)"/>
+    <rect x="112" y="0" width="28" height="126" rx="10" fill="url(#nexIcon)"/>
+    <line x1="80" y1="54" x2="126" y2="112" stroke="url(#nexIcon)" stroke-width="30" stroke-linecap="round"/>
+  </g>
+</svg>
