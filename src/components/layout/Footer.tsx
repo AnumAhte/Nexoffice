@@ -50,12 +50,21 @@ export function Footer() {
           <ul className="mt-4 flex gap-2.5">
             {socialLinks.map((social) => {
               const Icon = social.icon;
+              const isExternal = social.href.startsWith('http');
 
               return (
                 <li key={social.label}>
                   <Link
                     href={social.href}
-                    aria-label={social.label}
+                    aria-label={
+                      isExternal
+                        ? `${social.label} (opens in a new tab)`
+                        : social.label
+                    }
+                    {...(isExternal && {
+                      target: '_blank',
+                      rel: 'noopener noreferrer',
+                    })}
                     className={cn(
                       'flex size-[42px] items-center justify-center rounded-xl border border-white/[0.12] bg-white/5 text-fg-social transition-colors duration-[250ms] ease-native hover:text-white',
                       social.hoverClass,

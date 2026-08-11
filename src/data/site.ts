@@ -79,13 +79,13 @@ export interface SocialLink {
 export const socialLinks: SocialLink[] = [
   {
     label: 'GitHub',
-    href: '#contact',
+    href: 'https://github.com/AnumAhte',
     icon: GithubIcon,
     hoverClass: 'hover:border-nex-violet/60',
   },
   {
     label: 'LinkedIn',
-    href: '#contact',
+    href: 'https://www.linkedin.com/company/nexofficeai/',
     icon: LinkedinIcon,
     hoverClass: 'hover:border-nex-sky/60',
   },
