@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { ButtonLink } from '@/components/ui/Button';
 import type { Project } from '@/types';
 
 /**
@@ -59,15 +58,6 @@ export function ProjectCard({ project }: ProjectCardProps) {
             </li>
           ))}
         </ul>
-
-        <div className="mt-[18px] flex gap-2.5">
-          <ButtonLink href={project.demoUrl} size="card">
-            Live Demo<span className="sr-only"> for {project.title}</span>
-          </ButtonLink>
-          <ButtonLink href={project.repoUrl} size="card" variant="ghost">
-            GitHub<span className="sr-only"> repository for {project.title}</span>
-          </ButtonLink>
-        </div>
       </div>
     </article>
   );

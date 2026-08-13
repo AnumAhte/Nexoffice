@@ -51,8 +51,13 @@ export interface Project {
   image?: string;
   /** Alt text for `image`. Required whenever `image` is set. */
   imageAlt?: string;
-  demoUrl: string;
-  repoUrl: string;
+  /**
+   * Optional project links. Nothing renders them at present — the cards show
+   * image, title, description and tags only — but they are kept on the type so
+   * link affordances can be reintroduced without reshaping the data.
+   */
+  demoUrl?: string;
+  repoUrl?: string;
 }
 
 export interface Technology {

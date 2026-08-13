@@ -18,8 +18,6 @@ export const projects: Project[] = [
     description:
       'Same-day grocery ordering with slot-based delivery, live stock sync, and a packer app for the warehouse floor.',
     tags: ['Next.js', 'Supabase', 'Stripe'],
-    demoUrl: '#contact',
-    repoUrl: '#contact',
   },
   {
     id: 'ai-erp',
@@ -27,8 +25,6 @@ export const projects: Project[] = [
     description:
       'Manufacturing ERP where procurement and production planning are drafted by an agent and approved by humans.',
     tags: ['FastAPI', 'PostgreSQL', 'OpenAI'],
-    demoUrl: '#contact',
-    repoUrl: '#contact',
   },
   {
     id: 'ai-employee',
@@ -36,8 +32,6 @@ export const projects: Project[] = [
     description:
       'A back-office agent that reads inboxes, files documents, and answers process questions from company policy.',
     tags: ['Python', 'LangGraph', 'Redis'],
-    demoUrl: '#contact',
-    repoUrl: '#contact',
   },
   {
     id: 'influencer-marketplace',
@@ -45,8 +39,6 @@ export const projects: Project[] = [
     description:
       'Two-sided platform matching brands with creators, with campaign briefs, escrow payments, and performance reporting.',
     tags: ['Next.js', 'TypeScript', 'Supabase'],
-    demoUrl: '#contact',
-    repoUrl: '#contact',
   },
   {
     id: 'inventory-management',
@@ -54,8 +46,6 @@ export const projects: Project[] = [
     description:
       'Multi-warehouse stock control with barcode intake, reorder thresholds, and audit-ready movement history.',
     tags: ['React', 'FastAPI', 'PostgreSQL'],
-    demoUrl: '#contact',
-    repoUrl: '#contact',
   },
   {
     id: 'rag-textbook',
@@ -63,8 +53,6 @@ export const projects: Project[] = [
     description:
       'Retrieval-grounded study companion that answers from the textbook only and cites the page it used.',
     tags: ['Python', 'pgvector', 'OpenAI'],
-    demoUrl: '#contact',
-    repoUrl: '#contact',
   },
   {
     id: 'todo-ai-chatbot',
@@ -72,8 +60,6 @@ export const projects: Project[] = [
     description:
       'Task manager with natural-language capture, automatic scheduling, and a chatbot that reorganises your week.',
     tags: ['Next.js', 'Tailwind', 'OpenAI'],
-    demoUrl: '#contact',
-    repoUrl: '#contact',
   },
   {
     id: 'clinic-management',
@@ -81,8 +67,6 @@ export const projects: Project[] = [
     description:
       'Appointments, patient records, and prescription history with role separation for doctors and front desk.',
     tags: ['Next.js', 'Prisma', 'PostgreSQL'],
-    demoUrl: '#contact',
-    repoUrl: '#contact',
   },
   {
     id: 'weather-app',
@@ -90,8 +74,6 @@ export const projects: Project[] = [
     description:
       'Location-aware forecasts with hourly precipitation bands, saved cities, and offline caching.',
     tags: ['React', 'TypeScript', 'Vercel'],
-    demoUrl: '#contact',
-    repoUrl: '#contact',
   },
   {
     id: 'password-generator',
@@ -99,8 +81,6 @@ export const projects: Project[] = [
     description:
       'Entropy-scored generator with passphrase mode, clipboard auto-clear, and no network calls.',
     tags: ['TypeScript', 'Web Crypto', 'Tailwind'],
-    demoUrl: '#contact',
-    repoUrl: '#contact',
   },
 ];
 
