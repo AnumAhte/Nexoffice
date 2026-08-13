@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { site } from '@/data/site';
 import {
   coerceContactForm,
+  CONTACT_EMAIL_SUBJECT,
   isValid,
   validateContactForm,
   type ContactFormValues,
@@ -46,9 +47,10 @@ function toHtml(values: ContactFormValues): string {
   const rows: Array<[string, string]> = [
     ['Name', values.name],
     ['Email', values.email],
-    ['Company', values.company],
+    ['Company', values.company || '—'],
     ['Phone', values.phone || '—'],
-    ['Message', values.message],
+    ['Service needed', values.service],
+    ['Project details', values.message],
   ];
 
   return `<table style="font-family:sans-serif;font-size:14px;border-collapse:collapse">${rows
@@ -59,6 +61,20 @@ function toHtml(values: ContactFormValues): string {
         )}</td></tr>`,
     )
     .join('')}</table>`;
+}
+
+/** Plain-text alternative, so the mail is readable in any client. */
+function toText(values: ContactFormValues): string {
+  return [
+    `Name: ${values.name}`,
+    `Email: ${values.email}`,
+    `Company: ${values.company || '—'}`,
+    `Phone: ${values.phone || '—'}`,
+    `Service needed: ${values.service}`,
+    '',
+    'Project details:',
+    values.message,
+  ].join('\n');
 }
 
 async function deliver(values: ContactFormValues): Promise<void> {
@@ -81,8 +97,9 @@ async function deliver(values: ContactFormValues): Promise<void> {
       from,
       to: [to],
       reply_to: values.email,
-      subject: `New brief from ${values.name} — ${values.company}`,
+      subject: CONTACT_EMAIL_SUBJECT,
       html: toHtml(values),
+      text: toText(values),
     }),
   });
 

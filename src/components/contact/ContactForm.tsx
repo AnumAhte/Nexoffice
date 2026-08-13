@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useReducedMotion } from 'framer-motion';
-import { useState, type FormEvent } from 'react';
+import { useRef, useState, type FormEvent } from 'react';
 import { FormField } from '@/components/contact/FormField';
 import { Button } from '@/components/ui/Button';
 import { REVEAL_VIEWPORT, revealVariants } from '@/components/ui/Reveal';
@@ -12,6 +12,7 @@ import {
   emptyContactErrors,
   emptyContactForm,
   isValid,
+  SERVICE_OPTIONS,
   validateContactForm,
   type ContactFormErrors,
   type ContactFormValues,
@@ -20,6 +21,16 @@ import { cn } from '@/lib/utils';
 
 type Status = { tone: 'success' | 'error'; message: string } | null;
 
+/** Field order used to focus the first invalid control after a failed submit. */
+const FIELD_IDS: Record<keyof ContactFormValues, string> = {
+  name: 'contact-name',
+  email: 'contact-email',
+  company: 'contact-company',
+  phone: 'contact-phone',
+  service: 'contact-service',
+  message: 'contact-message',
+};
+
 export function ContactForm() {
   const [values, setValues] = useState<ContactFormValues>(emptyContactForm);
   const [errors, setErrors] = useState<ContactFormErrors>(emptyContactErrors);
@@ -27,20 +38,45 @@ export function ContactForm() {
   const [status, setStatus] = useState<Status>(null);
   const reduceMotion = useReducedMotion();
 
-  const setField = (key: keyof ContactFormValues) => (value: string) =>
+  /**
+   * Guards against duplicate submissions. The disabled button covers the
+   * common case, but `disabled` only takes effect after a re-render — a fast
+   * double-click or a repeated Enter keypress can dispatch twice before that.
+   * A ref flips synchronously, so the second submit is dropped outright.
+   */
+  const inFlight = useRef(false);
+
+  const setField = (key: keyof ContactFormValues) => (value: string) => {
     setValues((current) => ({ ...current, [key]: value }));
+    // Clear this field's error as soon as it is edited; it is re-checked on
+    // the next submit.
+    setErrors((current) =>
+      current[key] ? { ...current, [key]: '' } : current,
+    );
+  };
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
+    if (inFlight.current) return;
+
     const nextErrors = validateContactForm(values);
+    setErrors(nextErrors);
+
     if (!isValid(nextErrors)) {
-      setErrors(nextErrors);
       setStatus(null);
+
+      const firstInvalid = (
+        Object.keys(FIELD_IDS) as Array<keyof ContactFormValues>
+      ).find((key) => nextErrors[key]);
+
+      if (firstInvalid) {
+        document.getElementById(FIELD_IDS[firstInvalid])?.focus();
+      }
       return;
     }
 
-    setErrors(nextErrors);
+    inFlight.current = true;
     setSending(true);
     setStatus(null);
 
@@ -54,10 +90,12 @@ export function ContactForm() {
       if (!response.ok) throw new Error(`Request failed: ${response.status}`);
 
       setValues(emptyContactForm);
+      setErrors(emptyContactErrors);
       setStatus({ tone: 'success', message: CONTACT_SUCCESS_MESSAGE });
     } catch {
       setStatus({ tone: 'error', message: contactFailureMessage(site.email) });
     } finally {
+      inFlight.current = false;
       setSending(false);
     }
   }
@@ -118,9 +156,20 @@ export function ContactForm() {
       </div>
 
       <FormField
+        id="contact-service"
+        name="service"
+        label="Service Needed"
+        placeholder="Select a service"
+        options={SERVICE_OPTIONS}
+        value={values.service}
+        onChange={setField('service')}
+        error={errors.service}
+      />
+
+      <FormField
         id="contact-message"
         name="message"
-        label="Message"
+        label="Project Details"
         rows={5}
         placeholder="What are you building, and what does success look like in six months?"
         value={values.message}

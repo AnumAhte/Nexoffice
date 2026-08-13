@@ -73,10 +73,11 @@ Append to (or delete from) the `projects` array in `src/data/projects.ts`:
   tags: ['Next.js', 'PostgreSQL'],
   image: '/projects/project-name.webp',   // optional
   imageAlt: 'Dashboard showing …',        // required when image is set
-  demoUrl: 'https://…',
-  repoUrl: 'https://…',
 }
 ```
+
+Cards show image, title, description and tags. `demoUrl` and `repoUrl` remain
+on the `Project` type as optional fields, but nothing renders them.
 
 The carousel, arrows, auto-advance and the section heading count all follow
 automatically. Without `image`, the card renders the branded gradient slot from
@@ -88,10 +89,17 @@ Auto-advance is configured by `carouselConfig` in the same file
 
 ## Contact form
 
-Client-side validation in `src/lib/contact-form.ts` mirrors the design's rules
-exactly (required name/email/company, email format, optional phone pattern,
-20-character message minimum). The same module runs again server-side in
-`src/app/api/contact/route.ts`, so the rules can never drift.
+Fields are name, email, company, phone, service needed and project details.
+Name, email, service and project details are required; company and phone are
+optional, though phone is still format-checked when present. Validation lives in
+`src/lib/contact-form.ts` (email format, phone pattern, 20-character minimum on
+the details, and service membership of `SERVICE_OPTIONS` — so a request crafted
+outside the form cannot smuggle in an unlisted service). The same module runs
+server-side in `src/app/api/contact/route.ts`, so the rules can never drift.
+
+Submitting is guarded against duplicates by a ref that flips synchronously, not
+just the disabled button — `disabled` only applies after a re-render, so a fast
+double-click could otherwise dispatch twice.
 
 ### Where submissions go
 
