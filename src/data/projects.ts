@@ -10,21 +10,24 @@ import type { Project } from '@/types';
  * To show a real screenshot, drop the file into `public/projects/` and set
  * `image: '/projects/<file>'` together with a descriptive `imageAlt`. Without
  * an image the card falls back to the branded gradient slot from the design.
+ *
+ * The `featured` project leads the rail on a wider card, so keep it first.
  */
 export const projects: Project[] = [
-  {
-    id: 'grocery-ecommerce',
-    title: 'Grocery E-commerce Platform',
-    description:
-      'Same-day grocery ordering with slot-based delivery, live stock sync, and a packer app for the warehouse floor.',
-    tags: ['Next.js', 'Supabase', 'Stripe'],
-  },
   {
     id: 'ai-erp',
     title: 'AI ERP System',
     description:
       'Manufacturing ERP where procurement and production planning are drafted by an agent and approved by humans.',
     tags: ['FastAPI', 'PostgreSQL', 'OpenAI'],
+    featured: true,
+  },
+  {
+    id: 'grocery-ecommerce',
+    title: 'Grocery E-commerce Platform',
+    description:
+      'Same-day grocery ordering with slot-based delivery, live stock sync, and a packer app for the warehouse floor.',
+    tags: ['Next.js', 'Supabase', 'Stripe'],
   },
   {
     id: 'ai-employee',

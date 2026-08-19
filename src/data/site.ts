@@ -35,10 +35,10 @@ export const navLinks: NavLink[] = [
 ];
 
 export const heroStats: Stat[] = [
-  { value: '40+', label: 'Products delivered' },
-  { value: '12', label: 'Countries served' },
-  { value: '98%', label: 'Client retention' },
-  { value: '6 wks', label: 'Median time to MVP' },
+  { count: 40, suffix: '+', label: 'Products delivered' },
+  { count: 12, label: 'Countries served' },
+  { count: 98, suffix: '%', label: 'Client retention' },
+  { count: 6, suffix: ' wks', label: 'Median time to MVP' },
 ];
 
 export const contactChannels: ContactChannel[] = [

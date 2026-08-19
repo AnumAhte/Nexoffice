@@ -14,7 +14,10 @@ export interface NavLink {
 }
 
 export interface Stat {
-  value: string;
+  /** Numeric target — the hero rolls up to it on first view. */
+  count: number;
+  /** Rendered straight after the number ("+", "%", " wks"). */
+  suffix?: string;
   label: string;
 }
 
@@ -44,6 +47,11 @@ export interface Project {
   title: string;
   description: string;
   tags: string[];
+  /**
+   * Leads the carousel on a wider card with a "Featured project" eyebrow.
+   * Exactly one project should carry it.
+   */
+  featured?: boolean;
   /**
    * Optional screenshot. Drop a file in `/public/projects` and reference it as
    * `/projects/<file>`; without it the card renders the branded gradient slot.

@@ -38,6 +38,8 @@ export function Logo({ gradientId, size = 'nav', className }: LogoProps) {
         className={cn(
           MARK[size],
           'flex-none drop-shadow-[0_0_10px_rgba(124,58,237,0.55)]',
+          // The mark eases in once, in the header only.
+          size === 'nav' && 'animate-logo-in',
         )}
         aria-hidden
         focusable={false}

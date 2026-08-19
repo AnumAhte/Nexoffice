@@ -3,6 +3,7 @@ import { Plus_Jakarta_Sans } from 'next/font/google';
 import { BackgroundFX } from '@/components/layout/BackgroundFX';
 import { Footer } from '@/components/layout/Footer';
 import { Header } from '@/components/layout/Header';
+import { CursorGlow } from '@/components/ui/CursorGlow';
 import { site } from '@/data/site';
 import './globals.css';
 
@@ -71,6 +72,7 @@ export default function RootLayout({
         */}
         <div className="relative overflow-x-clip bg-ink">
           <BackgroundFX />
+          <CursorGlow />
           <Header />
           <main>{children}</main>
           <Footer />

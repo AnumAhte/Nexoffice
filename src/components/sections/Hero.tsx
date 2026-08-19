@@ -1,4 +1,6 @@
+import { HeroNetwork } from '@/components/hero/HeroNetwork';
 import { ButtonLink } from '@/components/ui/Button';
+import { CountUp } from '@/components/ui/CountUp';
 import { Reveal } from '@/components/ui/Reveal';
 import { Section } from '@/components/ui/Section';
 import { heroStats } from '@/data/site';
@@ -48,16 +50,22 @@ export function Hero() {
         </div>
       </Reveal>
 
-      <Reveal index={4} className="mt-[22px] w-full">
+      <Reveal index={4} className="mt-2 w-full max-w-[780px]">
+        <HeroNetwork />
+      </Reveal>
+
+      <Reveal index={5} className="mt-[22px] w-full">
         <ul className="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-3.5">
           {heroStats.map((stat) => (
             <li
               key={stat.label}
               className="rounded-[18px] border border-white/[0.08] bg-white/[0.04] p-[22px]"
             >
-              <p className="text-[30px] font-extrabold tracking-[-0.03em] text-white">
-                {stat.value}
-              </p>
+              <CountUp
+                count={stat.count}
+                suffix={stat.suffix}
+                className="text-[30px] font-extrabold tracking-[-0.03em] text-white"
+              />
               <p className="mt-1 text-[13px] text-fg-meta">{stat.label}</p>
             </li>
           ))}
