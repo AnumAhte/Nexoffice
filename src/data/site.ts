@@ -1,5 +1,5 @@
 import { Mail, MapPin, Phone } from 'lucide-react';
-import { GithubIcon, LinkedinIcon } from '@/components/icons';
+import { LinkedinIcon } from '@/components/icons';
 import type {
   ContactChannel,
   FooterColumn,
@@ -77,12 +77,6 @@ export interface SocialLink {
 }
 
 export const socialLinks: SocialLink[] = [
-  {
-    label: 'GitHub',
-    href: 'https://github.com/AnumAhte',
-    icon: GithubIcon,
-    hoverClass: 'hover:border-nex-violet/60',
-  },
   {
     label: 'LinkedIn',
     href: 'https://www.linkedin.com/company/nexofficeai/',
