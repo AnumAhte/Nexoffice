@@ -167,41 +167,72 @@ export function HeroNetwork() {
           data-net-core
           className="animate-core absolute top-1/2 left-1/2 flex -translate-1/2 flex-col items-center gap-[9px]"
         >
-          <span className="flex size-[clamp(66px,8.4vw,88px)] items-center justify-center rounded-3xl border border-nex-violet/50 bg-[linear-gradient(150deg,rgba(124,58,237,0.34),rgba(37,99,235,0.2))]">
-            <svg viewBox="0 0 144 132" className="h-[27px] w-[30px]" aria-hidden>
-              <defs>
-                <linearGradient id="nexNetCore" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stopColor="#A855F7" />
-                  <stop offset="58%" stopColor="#2563EB" />
-                  <stop offset="100%" stopColor="#22D3EE" />
-                </linearGradient>
-              </defs>
-              <rect
-                x="66"
-                y="40"
-                width="28"
-                height="92"
-                rx="10"
-                fill="url(#nexNetCore)"
-              />
-              <rect
-                x="112"
-                y="0"
-                width="28"
-                height="126"
-                rx="10"
-                fill="url(#nexNetCore)"
-              />
-              <line
-                x1="80"
-                y1="54"
-                x2="126"
-                y2="112"
-                stroke="url(#nexNetCore)"
-                strokeWidth="30"
-                strokeLinecap="round"
-              />
-            </svg>
+          {/* The badge turns in 3D, so it owns the perspective its face reads against. */}
+          <span className="relative flex size-[clamp(66px,8.4vw,88px)] items-center justify-center [perspective:620px] [perspective-origin:50%_50%]">
+            {/* Halo — centred with `translate` so the pulse keyframe owns `transform`. */}
+            <span
+              aria-hidden
+              className="animate-logo-halo pointer-events-none absolute top-1/2 left-1/2 size-[150%] -translate-1/2 rounded-full bg-[radial-gradient(circle,rgba(124,58,237,0.45)_0%,rgba(59,130,246,0.16)_45%,rgba(34,211,238,0)_72%)] blur-[10px]"
+            />
+            <span
+              data-logo-3d
+              className="animate-logo-breathe relative size-full [transform-style:preserve-3d]"
+            >
+              <span
+                data-logo-face
+                className="animate-logo-spin relative flex size-full items-center justify-center overflow-hidden rounded-3xl border border-nex-violet/50 bg-[linear-gradient(150deg,rgba(124,58,237,0.34),rgba(37,99,235,0.2))] shadow-[0_18px_44px_-22px_rgba(124,58,237,0.85)] will-change-transform [transform-style:preserve-3d] [backface-visibility:visible]"
+              >
+                {/* Specular sweep, clipped to the face. */}
+                <span
+                  aria-hidden
+                  className="animate-logo-shine pointer-events-none absolute top-[-20%] left-0 h-[140%] w-[45%] bg-[linear-gradient(90deg,rgba(255,255,255,0)_0%,rgba(255,255,255,0.42)_50%,rgba(255,255,255,0)_100%)]"
+                />
+                <svg
+                  viewBox="0 0 144 132"
+                  className="relative h-[27px] w-[30px]"
+                  aria-hidden
+                >
+                  <defs>
+                    <linearGradient
+                      id="nexNetCore"
+                      x1="0"
+                      y1="0"
+                      x2="1"
+                      y2="1"
+                    >
+                      <stop offset="0%" stopColor="#A855F7" />
+                      <stop offset="58%" stopColor="#2563EB" />
+                      <stop offset="100%" stopColor="#22D3EE" />
+                    </linearGradient>
+                  </defs>
+                  <rect
+                    x="66"
+                    y="40"
+                    width="28"
+                    height="92"
+                    rx="10"
+                    fill="url(#nexNetCore)"
+                  />
+                  <rect
+                    x="112"
+                    y="0"
+                    width="28"
+                    height="126"
+                    rx="10"
+                    fill="url(#nexNetCore)"
+                  />
+                  <line
+                    x1="80"
+                    y1="54"
+                    x2="126"
+                    y2="112"
+                    stroke="url(#nexNetCore)"
+                    strokeWidth="30"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </span>
+            </span>
           </span>
           <span className="rounded-[7px] bg-[rgba(5,5,12,0.88)] px-2.5 py-[3px] text-[clamp(10px,1.1vw,12px)] font-bold tracking-[0.18em] text-white">
             NEXOFFICE
