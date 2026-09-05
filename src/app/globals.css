@@ -56,6 +56,9 @@
   /* The design's hover transitions all use the CSS keyword `ease`. */
   --ease-native: ease;
 
+  /* The ecosystem's entrance curve — a fast start that settles slowly. */
+  --ease-eco: cubic-bezier(0.16, 0.9, 0.3, 1);
+
   /**
    * The design sets line-height only where it means to; everything else runs at
    * the font's `normal`. Tailwind's size utilities ship an opinionated pairing,
@@ -77,19 +80,25 @@
   --animate-pulse-dot: nexPulse 2.4s ease-in-out infinite;
   --animate-pulse-pin: nexPulse 2.6s ease-in-out infinite;
 
-  /* Hero network: node drift, travelling link dashes, breathing core */
-  --animate-node-a: nexNodeA 7.5s ease-in-out infinite;
-  --animate-node-b: nexNodeB 8.5s ease-in-out infinite;
-  --animate-node-c: nexNodeC 9s ease-in-out infinite;
-  --animate-node-d: nexNodeD 8s ease-in-out infinite;
-  --animate-dash-slow: nexDash 3.6s linear infinite;
-  --animate-dash-fast: nexDash 4.4s linear infinite;
-  --animate-dash-x-slow: nexDashX 3.6s linear infinite;
-  --animate-dash-x-fast: nexDashX 4.4s linear infinite;
+  /* Hero ecosystem: the core's breathing glow */
   --animate-core: nexCore 6s ease-in-out infinite;
 
-  /* Hero core mark: the 3D logo badge — spin, breath, shine sweep, halo */
-  --animate-logo-spin: nexLogoSpin 14s linear infinite;
+  /**
+   * The ecosystem's staged entrance. The ambient layers arrive first at
+   * 120ms + 140ms apart; the panels follow from 620ms, 115ms apart, which the
+   * card carries as its own `animation-delay`. Running this as CSS rather than
+   * from the parallax script means the scene is never blank if that script
+   * fails — it only ever adds the drift on top.
+   */
+  --animate-eco-glow-in: nexEcoFade 1200ms ease 120ms both;
+  --animate-eco-lines-in: nexEcoFade 1400ms ease 260ms both;
+  --animate-eco-motes-in: nexEcoFade 1600ms ease 400ms both;
+  --animate-eco-logo-in: nexEcoFade 900ms var(--ease-eco) 540ms both;
+  --animate-eco-card-in:
+    nexEcoFade 900ms var(--ease-eco) both,
+    nexEcoRise 1150ms var(--ease-eco) both;
+
+  /* Hero core mark: the 3D logo badge — breath, shine sweep, halo */
   --animate-logo-breathe: nexLogoBreathe 6s ease-in-out infinite;
   --animate-logo-shine: nexLogoShine 6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
   --animate-logo-halo: nexLogoHalo 6s ease-in-out infinite;
@@ -132,67 +141,85 @@
     }
   }
 
+  @keyframes nexEcoFade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
   /**
-   * The network nodes are centred on their anchor with the `translate`
-   * property, so these keyframes carry the drift alone and the two never
-   * fight — the design folds both into a single `transform`.
+   * Panels fly in from off to one side and far behind. Each one sets its own
+   * `--eco-x` / `--eco-y` so a single keyframe serves all eight.
    */
-  @keyframes nexNodeA {
-    0%,
-    100% {
-      transform: translate3d(0, 0, 0);
+  @keyframes nexEcoRise {
+    from {
+      transform: translate3d(var(--eco-x, 0px), var(--eco-y, 0px), -320px)
+        scale(0.9);
     }
-    50% {
-      transform: translate3d(0, -7px, 0);
-    }
-  }
-
-  @keyframes nexNodeB {
-    0%,
-    100% {
-      transform: translate3d(0, 0, 0);
-    }
-    50% {
-      transform: translate3d(6px, 4px, 0);
+    to {
+      transform: none;
     }
   }
 
-  @keyframes nexNodeC {
-    0%,
-    100% {
-      transform: translate3d(0, 0, 0);
+  /* A spoke's dashes travelling inward, and the spoke itself brightening. */
+  @keyframes nexEcoDash {
+    from {
+      stroke-dashoffset: 0;
     }
-    50% {
-      transform: translate3d(-6px, 5px, 0);
-    }
-  }
-
-  @keyframes nexNodeD {
-    0%,
-    100% {
-      transform: translate3d(0, 0, 0);
-    }
-    50% {
-      transform: translate3d(0, 6px, 0);
+    to {
+      stroke-dashoffset: -64;
     }
   }
 
-  /* Two dash periods per cycle, so the link reads as a continuous flow. */
-  @keyframes nexDash {
+  @keyframes nexEcoPulse {
+    0%,
+    100% {
+      stroke-opacity: 0.34;
+    }
+    50% {
+      stroke-opacity: 0.95;
+    }
+  }
+
+  /* Dust rising through a depth plane, fading in and out at the ends. */
+  @keyframes nexMote {
+    0% {
+      opacity: 0;
+      transform: translate3d(0, 14px, 0);
+    }
+    20% {
+      opacity: 0.9;
+    }
+    80% {
+      opacity: 0.7;
+    }
+    100% {
+      opacity: 0;
+      transform: translate3d(0, -58px, 0);
+    }
+  }
+
+  /* The analytics card's bars breathing against their baseline. */
+  @keyframes nexBar {
+    0%,
+    100% {
+      transform: scaleY(0.55);
+    }
+    50% {
+      transform: scaleY(1);
+    }
+  }
+
+  /* Two dash periods per cycle, so the rail reads as a continuous flow. */
+  @keyframes nexEcoRail {
     from {
       background-position: 0 0;
     }
     to {
-      background-position: 0 -26px;
-    }
-  }
-
-  @keyframes nexDashX {
-    from {
-      background-position: 0 0;
-    }
-    to {
-      background-position: 26px 0;
+      background-position: 22px 0;
     }
   }
 
@@ -207,15 +234,6 @@
       box-shadow:
         0 0 54px rgba(124, 58, 237, 0.5),
         inset 0 0 26px rgba(124, 58, 237, 0.22);
-    }
-  }
-
-  @keyframes nexLogoSpin {
-    from {
-      transform: rotateY(0deg);
-    }
-    to {
-      transform: rotateY(360deg);
     }
   }
 
@@ -332,19 +350,79 @@
   }
 
   /**
-   * Phones never get the hero network's pointer parallax, so the standing
-   * animation is all cost and no read. The design parks it at 640px.
+   * Hovering a panel brings it forward and pushes the rest of the scene back.
+   * The lift in z belongs to the drift script — it shares a `transform` with
+   * the panel's float — but everything flat about the state lives here.
    */
+  [data-eco-card] {
+    transition:
+      opacity 420ms ease,
+      transform 420ms ease,
+      box-shadow 420ms ease,
+      border-color 420ms ease,
+      filter 420ms ease;
+  }
+
+  [data-eco-wrap]:hover [data-eco-card] {
+    transform: scale(1.04);
+    filter: saturate(1.1) brightness(1.08);
+    border-color: rgb(168 85 247 / 0.5);
+    box-shadow:
+      0 34px 74px -30px rgb(0 0 0 / 0.95),
+      0 0 0 1px rgb(168 85 247 / 0.3),
+      0 0 46px -10px rgb(124 58 237 / 0.55);
+  }
+
+  [data-eco-rig]:has([data-eco-wrap]:hover)
+    [data-eco-wrap]:not(:hover)
+    [data-eco-card] {
+    opacity: 0.42;
+  }
+
+  [data-eco-label] {
+    opacity: 0;
+    transition: opacity 260ms ease;
+  }
+
+  [data-eco-wrap]:hover [data-eco-label] {
+    opacity: 1;
+  }
+
+  /**
+   * The ecosystem thins out as the viewport narrows: the furthest ring of
+   * panels goes first, then the middle one, leaving the two nearest panels
+   * and the core mark on a phone.
+   */
+  @media (max-width: 900px) {
+    [data-eco-panel='far'],
+    [data-eco-linet='far'] {
+      display: none !important;
+    }
+  }
+
   @media (max-width: 640px) {
-    [data-net-node],
-    [data-net-line],
-    [data-net-core] {
-      animation: none !important;
+    [data-eco-panel='mid'],
+    [data-eco-linet='mid'],
+    [data-eco-plane='far'] {
+      display: none !important;
     }
 
-    /* The core mark keeps turning, but slowly enough to stay cheap. */
-    [data-logo-face] {
-      animation-duration: 18s !important;
+    /* Half the dust, at a lower level — it reads as texture, not detail. */
+    [data-eco-mote]:nth-child(n + 5) {
+      display: none !important;
+    }
+
+    [data-eco-motes] {
+      opacity: 0.6 !important;
+    }
+
+    /**
+     * The mini-UIs inside the surviving panels stop animating. Scoped to the
+     * card's contents, not the panel, so the entrance itself still plays —
+     * `animation: none` on that would leave the panel stuck at opacity 0.
+     */
+    [data-eco-card] * {
+      animation: none !important;
     }
 
     [data-logo-3d] {

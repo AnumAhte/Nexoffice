@@ -1,4 +1,4 @@
-import { HeroNetwork } from '@/components/hero/HeroNetwork';
+import { HeroEcosystem } from '@/components/hero/HeroEcosystem';
 import { ButtonLink } from '@/components/ui/Button';
 import { CountUp } from '@/components/ui/CountUp';
 import { Reveal } from '@/components/ui/Reveal';
@@ -50,8 +50,8 @@ export function Hero() {
         </div>
       </Reveal>
 
-      <Reveal index={4} className="mt-2 w-full max-w-[780px]">
-        <HeroNetwork />
+      <Reveal index={4} className="mt-[30px] w-full max-w-[1040px]">
+        <HeroEcosystem />
       </Reveal>
 
       <Reveal index={5} className="mt-[22px] w-full">
